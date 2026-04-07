@@ -17,8 +17,10 @@
             <div style="color: #999; font-size: 12px;">Qty: {{ item.quantity }} × ￥{{ item.unitPrice }}</div>
           </div>
         </div>
-        <div style="margin-top: 15px; text-align: right;" v-if="order.status === 'PENDING_PAYMENT'">
-          <el-button type="success" @click="simulatePayment(order.id)">Simulate Payment</el-button>
+
+        <div style="margin-top: 15px; text-align: right;">
+          <el-button type="success" @click="simulatePayment(order.id)" v-if="order.status === 'PENDING_PAYMENT'">Simulate Payment</el-button>
+          <el-button type="danger" @click="deleteOrder(order.id)">Delete Order</el-button>
         </div>
       </el-card>
     </div>
@@ -67,6 +69,15 @@ const simulatePayment = async (orderId) => {
   await request.post(`/api/orders/${orderId}/pay`)
   ElMessage.success('Payment successful!')
   fetchOrders()
+}
+
+
+const deleteOrder = async (orderId) => {
+  try {
+    await request.delete('/api/orders/' + orderId)
+    ElMessage.success('Order deleted')
+    fetchOrders()
+  } catch(e) {}
 }
 
 onMounted(() => {
