@@ -10,6 +10,7 @@
           <el-menu-item index="/orders" v-if="userRole === 'CONSUMER' || userRole === 'FARMER'">Orders</el-menu-item>
           <el-menu-item index="/my-products" v-if="userRole === 'FARMER'">My Products</el-menu-item>
           <el-menu-item index="/review-products" v-if="userRole === 'ADMIN'">Review Products</el-menu-item>
+          <el-menu-item index="/users" v-if="userRole === 'ADMIN'">User Management</el-menu-item>
         </el-menu>
       </div>
       <div class="user-info">

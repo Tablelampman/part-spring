@@ -95,13 +95,12 @@ public class ProductController {
             wrapper.eq("status", status);
         }
 
-        // Handle farmerName search
         if (StringUtils.hasText(farmerName)) {
             QueryWrapper<User> userWrapper = new QueryWrapper<>();
             userWrapper.like("username", farmerName).eq("role", "FARMER");
             List<User> farmers = userMapper.selectList(userWrapper);
             if (farmers.isEmpty()) {
-                return Result.success(List.of()); // No matching farmers
+                return Result.success(List.of());
             }
             List<Integer> farmerIds = farmers.stream().map(User::getId).collect(Collectors.toList());
             wrapper.in("farmer_id", farmerIds);
@@ -174,5 +173,24 @@ public class ProductController {
         }
 
         return Result.success(productMapper.selectList(wrapper));
+    }
+
+    // Farmer or Admin: Delete a product
+    @DeleteMapping("/{id}")
+    public Result<Void> deleteProduct(@PathVariable Integer id, HttpServletRequest request) {
+        String role = (String) request.getAttribute("role");
+        Integer userId = (Integer) request.getAttribute("userId");
+
+        Product product = productMapper.selectById(id);
+        if (product == null) {
+            return Result.error(404, "Product not found");
+        }
+
+        if ("ADMIN".equals(role) || ("FARMER".equals(role) && product.getFarmerId().equals(userId))) {
+            productMapper.deleteById(id);
+            return Result.success();
+        } else {
+            return Result.error(403, "Access denied. Cannot delete this product.");
+        }
     }
 }

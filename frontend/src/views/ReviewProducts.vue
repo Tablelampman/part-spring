@@ -45,6 +45,7 @@
         <template #default="scope">
           <el-button size="small" type="success" @click="updateStatus(scope.row.id, 'APPROVED')" :disabled="scope.row.status === 'APPROVED'">Approve</el-button>
           <el-button size="small" type="danger" @click="updateStatus(scope.row.id, 'REJECTED')" :disabled="scope.row.status === 'REJECTED'">Reject</el-button>
+          <el-button size="small" type="warning" @click="deleteProduct(scope.row.id)">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,6 +98,15 @@ const updateStatus = async (id, status) => {
   await request.put(`/api/products/${id}/status?status=${status}`)
   ElMessage.success(`Product ${status.toLowerCase()}`)
   fetchProducts()
+}
+
+
+const deleteProduct = async (id) => {
+  try {
+    await request.delete('/api/products/' + id)
+    ElMessage.success('Product deleted')
+    fetchProducts()
+  } catch(e) {}
 }
 
 onMounted(() => {

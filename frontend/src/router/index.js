@@ -50,6 +50,12 @@ const routes = [
         name: 'ReviewProducts',
         component: () => import('@/views/ReviewProducts.vue'),
         meta: { role: 'ADMIN', requiresAuth: true }
+      },
+      {
+        path: 'users',
+        name: 'UserManagement',
+        component: () => import('@/views/UserManagement.vue'),
+        meta: { role: 'ADMIN', requiresAuth: true }
       }
     ]
   }

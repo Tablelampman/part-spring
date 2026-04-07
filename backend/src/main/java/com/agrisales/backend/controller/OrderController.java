@@ -63,7 +63,6 @@ public class OrderController {
                 return Result.error(400, "Insufficient stock for product: " + (product != null ? product.getName() : cartItem.getProductId()));
             }
 
-            // Deduct stock
             product.setStock(product.getStock() - cartItem.getQuantity());
             productMapper.updateById(product);
 
@@ -75,7 +74,6 @@ public class OrderController {
 
             totalAmount = totalAmount.add(product.getPrice().multiply(new BigDecimal(cartItem.getQuantity())));
 
-            // Remove from cart
             cartItemMapper.deleteById(cartItemId);
         }
 
@@ -94,7 +92,6 @@ public class OrderController {
         return Result.success(order);
     }
 
-    // Consumer: View my orders
     @GetMapping("/my")
     public Result<List<Order>> getMyOrders(HttpServletRequest request) {
         Integer consumerId = (Integer) request.getAttribute("userId");
@@ -115,7 +112,6 @@ public class OrderController {
         return Result.success(orders);
     }
 
-    // Simulate payment
     @PostMapping("/{id}/pay")
     public Result<Void> payOrder(@PathVariable Integer id, HttpServletRequest request) {
         Integer consumerId = (Integer) request.getAttribute("userId");
@@ -132,7 +128,6 @@ public class OrderController {
         return Result.success();
     }
 
-    // Farmer: Get orders containing their products
     @GetMapping("/farmer")
     public Result<List<OrderItem>> getFarmerOrders(HttpServletRequest request) {
         String role = (String) request.getAttribute("role");
@@ -141,7 +136,6 @@ public class OrderController {
         }
         Integer farmerId = (Integer) request.getAttribute("userId");
 
-        // Find all products by this farmer
         QueryWrapper<Product> productWrapper = new QueryWrapper<>();
         productWrapper.eq("farmer_id", farmerId);
         List<Product> products = productMapper.selectList(productWrapper);
@@ -158,5 +152,26 @@ public class OrderController {
         }
 
         return Result.success(items);
+    }
+
+    // Consumer or Admin: Delete an order
+    @DeleteMapping("/{id}")
+    @Transactional
+    public Result<Void> deleteOrder(@PathVariable Integer id, HttpServletRequest request) {
+        String role = (String) request.getAttribute("role");
+        Integer userId = (Integer) request.getAttribute("userId");
+
+        Order order = orderMapper.selectById(id);
+        if (order == null) {
+            return Result.error(404, "Order not found");
+        }
+
+        if ("ADMIN".equals(role) || ("CONSUMER".equals(role) && order.getConsumerId().equals(userId))) {
+            // Delete order items first if DB doesn't cascade, but since DB cascades, deleting order is enough.
+            orderMapper.deleteById(id);
+            return Result.success();
+        } else {
+            return Result.error(403, "Access denied. Cannot delete this order.");
+        }
     }
 }

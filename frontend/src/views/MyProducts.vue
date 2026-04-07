@@ -40,6 +40,11 @@
           <el-tag :type="getStatusType(scope.row.status)">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="Actions" width="120">
+        <template #default="scope">
+          <el-button size="small" type="danger" @click="deleteProduct(scope.row.id)">Delete</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- Add Product Dialog -->
@@ -165,6 +170,15 @@ const submitProduct = async () => {
   form.stock = 0
   form.imageUrl = ''
   fetchProducts()
+}
+
+
+const deleteProduct = async (id) => {
+  try {
+    await request.delete('/api/products/' + id)
+    ElMessage.success('Product deleted')
+    fetchProducts()
+  } catch(e) {}
 }
 
 onMounted(() => {
