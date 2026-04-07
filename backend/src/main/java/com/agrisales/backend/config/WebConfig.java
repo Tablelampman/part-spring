@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/api/**")
                 // Allow login, register, and the public products endpoint
-                .excludePathPatterns("/api/auth/login", "/api/auth/register", "/api/products/public");
+                .excludePathPatterns("/api/auth/login", "/api/auth/register", "/api/products/public", "/api/products/public/**", "/api/comments/product/**");
     }
 
     @Override
