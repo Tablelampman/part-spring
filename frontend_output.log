@@ -3,8 +3,7 @@
 > vite --host
 
 
-  VITE v8.0.5  ready in 474 ms
+  VITE v8.0.5  ready in 1176 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: http://192.168.0.2:5173/
-4:28:24 AM [vite] (client) [optimizer] bundling dependencies...
