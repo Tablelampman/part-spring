@@ -2,7 +2,24 @@
   <div class="home">
     <h2>Marketplace</h2>
 
-    <el-tabs v-model="activeCategory" class="category-tabs">
+    <div class="filter-section">
+      <el-form :inline="true" class="search-form">
+        <el-form-item label="Search">
+          <el-input v-model="searchParams.name" placeholder="Product name" clearable @keyup.enter="fetchProducts" />
+        </el-form-item>
+        <el-form-item label="Price">
+          <el-input-number v-model="searchParams.minPrice" :min="0" placeholder="Min" style="width: 100px" />
+          <span style="margin: 0 10px;">-</span>
+          <el-input-number v-model="searchParams.maxPrice" :min="0" placeholder="Max" style="width: 100px" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="fetchProducts">Search</el-button>
+          <el-button @click="resetSearch">Reset</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
+    <el-tabs v-model="activeCategory" class="category-tabs" @tab-change="handleTabChange">
       <el-tab-pane label="All" name="All"></el-tab-pane>
       <el-tab-pane label="Fruits" name="Fruits"></el-tab-pane>
       <el-tab-pane label="Vegetables" name="Vegetables"></el-tab-pane>
@@ -12,8 +29,8 @@
       <el-tab-pane label="Others" name="Others"></el-tab-pane>
     </el-tabs>
 
-    <div class="product-grid" v-if="filteredProducts.length > 0">
-      <el-card v-for="product in filteredProducts" :key="product.id" class="product-card" :body-style="{ padding: '0px' }">
+    <div class="product-grid" v-if="products.length > 0" v-loading="loading">
+      <el-card v-for="product in products" :key="product.id" class="product-card" :body-style="{ padding: '0px' }">
         <img :src="product.imageUrl" class="product-image" v-if="product.imageUrl"/>
         <div v-else class="image-placeholder">No Image</div>
         <div class="product-info">
@@ -37,12 +54,12 @@
         </div>
       </el-card>
     </div>
-    <el-empty description="No products found in this category" v-else></el-empty>
+    <el-empty description="No products found" v-else></el-empty>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import request from '@/api/axios'
 import { useUserStore } from '@/store/user'
@@ -52,16 +69,40 @@ const router = useRouter()
 const userStore = useUserStore()
 const products = ref([])
 const activeCategory = ref('All')
+const loading = ref(false)
+
+const searchParams = reactive({
+  name: '',
+  minPrice: null,
+  maxPrice: null
+})
 
 const fetchProducts = async () => {
-  // Use public endpoint
-  products.value = await request.get('/api/products/public')
+  loading.value = true
+  try {
+    const params = {}
+    if (searchParams.name) params.name = searchParams.name
+    if (searchParams.minPrice !== null) params.minPrice = searchParams.minPrice
+    if (searchParams.maxPrice !== null) params.maxPrice = searchParams.maxPrice
+    if (activeCategory.value !== 'All') params.category = activeCategory.value
+
+    products.value = await request.get('/api/products/public', { params })
+  } finally {
+    loading.value = false
+  }
 }
 
-const filteredProducts = computed(() => {
-  if (activeCategory.value === 'All') return products.value
-  return products.value.filter(p => (p.category || 'Others') === activeCategory.value)
-})
+const handleTabChange = () => {
+  fetchProducts()
+}
+
+const resetSearch = () => {
+  searchParams.name = ''
+  searchParams.minPrice = null
+  searchParams.maxPrice = null
+  activeCategory.value = 'All'
+  fetchProducts()
+}
 
 const addToCart = async (productId) => {
   if (!userStore.token) {
@@ -82,6 +123,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.filter-section {
+  background: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.05);
+}
 .category-tabs {
   margin-bottom: 20px;
 }
