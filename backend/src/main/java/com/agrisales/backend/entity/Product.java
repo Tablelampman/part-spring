@@ -16,6 +16,7 @@ public class Product {
     private BigDecimal price;
     private Integer stock;
     private String imageUrl;
+    private String category;
     private String status; // PENDING, APPROVED, REJECTED
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
@@ -41,6 +42,9 @@ public class Product {
 
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
