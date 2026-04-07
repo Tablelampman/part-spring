@@ -193,4 +193,14 @@ public class ProductController {
             return Result.error(403, "Access denied. Cannot delete this product.");
         }
     }
+
+    // Public/All: Get a single product by ID
+    @GetMapping("/public/{id}")
+    public Result<Product> getProductById(@PathVariable Integer id) {
+        Product product = productMapper.selectById(id);
+        if (product == null || !"APPROVED".equals(product.getStatus())) {
+            return Result.error(404, "Product not found or not approved");
+        }
+        return Result.success(product);
+    }
 }

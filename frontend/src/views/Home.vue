@@ -30,7 +30,7 @@
     </el-tabs>
 
     <div class="product-grid" v-if="products.length > 0" v-loading="loading">
-      <el-card v-for="product in products" :key="product.id" class="product-card" :body-style="{ padding: '0px' }">
+      <el-card v-for="product in products" :key="product.id" class="product-card" :body-style="{ padding: '0px' }" @click="goToProduct(product.id)" style="cursor: pointer;">
         <img :src="product.imageUrl" class="product-image" v-if="product.imageUrl"/>
         <div v-else class="image-placeholder">No Image</div>
         <div class="product-info">
@@ -46,7 +46,7 @@
             v-if="!userStore.token || userStore.userInfo.role === 'CONSUMER'"
             type="primary"
             style="width: 100%; margin-top: 10px;"
-            @click="addToCart(product.id)"
+            @click.stop="addToCart(product.id)"
             :disabled="product.stock <= 0"
           >
             Add to Cart
@@ -76,6 +76,10 @@ const searchParams = reactive({
   minPrice: null,
   maxPrice: null
 })
+
+const goToProduct = (id) => {
+  router.push('/product/' + id)
+}
 
 const fetchProducts = async () => {
   loading.value = true

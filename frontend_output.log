@@ -16,3 +16,5 @@
 7:43:09 AM [vite] (client) hmr update /src/layout/index.vue
 8:09:32 AM [vite] (client) page reload src/router/index.js
 8:09:33 AM [vite] (client) hmr update /src/layout/index.vue
+2:45:01 PM [vite] (client) page reload src/router/index.js
+2:45:01 PM [vite] (client) hmr update /src/views/Home.vue
