@@ -12,8 +12,13 @@
         </el-menu>
       </div>
       <div class="user-info">
-        <span>{{ username }} ({{ userRole }})</span>
-        <el-button type="danger" size="small" @click="handleLogout" style="margin-left: 15px">Logout</el-button>
+        <template v-if="isLoggedIn">
+          <span>{{ username }} ({{ userRole }})</span>
+          <el-button type="danger" size="small" @click="handleLogout" style="margin-left: 15px">Logout</el-button>
+        </template>
+        <template v-else>
+          <el-button type="primary" size="small" @click="$router.push('/login')">Login / Register</el-button>
+        </template>
       </div>
     </el-header>
     <el-main class="main-content">
@@ -30,6 +35,7 @@ import { useUserStore } from '@/store/user'
 const router = useRouter()
 const userStore = useUserStore()
 
+const isLoggedIn = computed(() => !!userStore.token)
 const username = computed(() => userStore.userInfo.username)
 const userRole = computed(() => userStore.userInfo.role)
 

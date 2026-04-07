@@ -12,8 +12,9 @@
             <span class="price">￥{{ product.price }}</span>
             <span class="stock">Stock: {{ product.stock }}</span>
           </div>
+          <!-- Show Add to Cart for consumers AND unauthenticated users (to prompt login) -->
           <el-button
-            v-if="userStore.userInfo.role === 'CONSUMER'"
+            v-if="!userStore.token || userStore.userInfo.role === 'CONSUMER'"
             type="primary"
             style="width: 100%; margin-top: 10px;"
             @click="addToCart(product.id)"
@@ -29,18 +30,27 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import request from '@/api/axios'
 import { useUserStore } from '@/store/user'
 import { ElMessage } from 'element-plus'
 
+const router = useRouter()
 const userStore = useUserStore()
 const products = ref([])
 
 const fetchProducts = async () => {
-  products.value = await request.get('/api/products')
+  // Use public endpoint
+  products.value = await request.get('/api/products/public')
 }
 
 const addToCart = async (productId) => {
+  if (!userStore.token) {
+    ElMessage.warning('Please login to add to cart')
+    router.push('/login')
+    return
+  }
+
   try {
     await request.post('/api/cart', { productId, quantity: 1 })
     ElMessage.success('Added to cart')

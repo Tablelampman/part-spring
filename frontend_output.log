@@ -7,3 +7,6 @@
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: http://192.168.0.2:5173/
+6:23:22 AM [vite] (client) page reload src/router/index.js
+6:23:38 AM [vite] (client) hmr update /src/views/Home.vue
+6:23:38 AM [vite] (client) hmr update /src/layout/index.vue
