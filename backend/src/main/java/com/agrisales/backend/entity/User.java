@@ -3,7 +3,7 @@ package com.agrisales.backend.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @TableName("users")
 public class User {
@@ -12,7 +12,7 @@ public class User {
     private String username;
     private String password;
     private String role; // CONSUMER, FARMER, ADMIN
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     // Getters and Setters
     public Integer getId() { return id; }
@@ -27,6 +27,6 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public OffsetDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
 }
