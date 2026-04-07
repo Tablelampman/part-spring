@@ -97,7 +97,7 @@ public class ProductController {
     }
 
     // Public/All: Get all approved products
-    @GetMapping
+    @GetMapping("/public")
     public Result<List<Product>> getApprovedProducts() {
         QueryWrapper<Product> wrapper = new QueryWrapper<>();
         wrapper.eq("status", "APPROVED");

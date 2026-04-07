@@ -19,30 +19,32 @@ const routes = [
       {
         path: '',
         name: 'Home',
-        component: () => import('@/views/Home.vue')
+        component: () => import('@/views/Home.vue'),
+        // No role requirement, open to public
       },
       {
         path: 'cart',
         name: 'Cart',
         component: () => import('@/views/Cart.vue'),
-        meta: { role: 'CONSUMER' }
+        meta: { role: 'CONSUMER', requiresAuth: true }
       },
       {
         path: 'orders',
         name: 'Orders',
-        component: () => import('@/views/Orders.vue')
+        component: () => import('@/views/Orders.vue'),
+        meta: { requiresAuth: true } // Consumer and Farmer
       },
       {
         path: 'my-products',
         name: 'MyProducts',
         component: () => import('@/views/MyProducts.vue'),
-        meta: { role: 'FARMER' }
+        meta: { role: 'FARMER', requiresAuth: true }
       },
       {
         path: 'review-products',
         name: 'ReviewProducts',
         component: () => import('@/views/ReviewProducts.vue'),
-        meta: { role: 'ADMIN' }
+        meta: { role: 'ADMIN', requiresAuth: true }
       }
     ]
   }
@@ -57,7 +59,7 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const token = userStore.token
 
-  if (!token && to.path !== '/login' && to.path !== '/register') {
+  if (to.meta.requiresAuth && !token) {
     next('/login')
   } else if (to.meta.role && userStore.userInfo.role !== to.meta.role) {
     next('/')
