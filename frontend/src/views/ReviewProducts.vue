@@ -10,6 +10,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="name" label="Name" />
+      <el-table-column prop="category" label="Category" width="120" />
       <el-table-column prop="price" label="Price" width="120" />
       <el-table-column prop="stock" label="Stock" width="100" />
       <el-table-column label="Actions" width="200">

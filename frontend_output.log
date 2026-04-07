@@ -10,3 +10,4 @@
 6:23:22 AM [vite] (client) page reload src/router/index.js
 6:23:38 AM [vite] (client) hmr update /src/views/Home.vue
 6:23:38 AM [vite] (client) hmr update /src/layout/index.vue
+6:59:21 AM [vite] (client) hmr update /src/views/Home.vue, /src/views/Home.vue?vue&type=style&index=0&scoped=2dc54a20&lang.css

@@ -13,6 +13,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="name" label="Name" />
+      <el-table-column prop="category" label="Category" width="120" />
       <el-table-column prop="price" label="Price" width="120" />
       <el-table-column prop="stock" label="Stock" width="100" />
       <el-table-column prop="status" label="Status" width="120">
@@ -27,6 +28,16 @@
       <el-form :model="form" label-width="120px">
         <el-form-item label="Name">
           <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item label="Category">
+          <el-select v-model="form.category" placeholder="Select Category" style="width: 100%">
+            <el-option label="Fruits" value="Fruits" />
+            <el-option label="Vegetables" value="Vegetables" />
+            <el-option label="Meat & Poultry" value="Meat" />
+            <el-option label="Dairy & Eggs" value="Dairy" />
+            <el-option label="Grains" value="Grains" />
+            <el-option label="Others" value="Others" />
+          </el-select>
         </el-form-item>
         <el-form-item label="Description">
           <el-input v-model="form.description" type="textarea" />
@@ -77,6 +88,7 @@ const uploadHeaders = computed(() => {
 
 const form = reactive({
   name: '',
+  category: 'Others',
   description: '',
   price: 0,
   stock: 0,
@@ -110,6 +122,7 @@ const submitProduct = async () => {
   dialogVisible.value = false
   // reset form
   form.name = ''
+  form.category = 'Others'
   form.description = ''
   form.price = 0
   form.stock = 0
