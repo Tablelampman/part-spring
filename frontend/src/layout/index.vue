@@ -5,6 +5,7 @@
       <div class="nav-menu">
         <el-menu mode="horizontal" :router="true" :default-active="$route.path">
           <el-menu-item index="/">Home (Shop)</el-menu-item>
+          <el-menu-item index="/dashboard" v-if="userRole === 'ADMIN' || userRole === 'FARMER'">Dashboard</el-menu-item>
           <el-menu-item index="/cart" v-if="userRole === 'CONSUMER'">Cart</el-menu-item>
           <el-menu-item index="/orders" v-if="userRole === 'CONSUMER' || userRole === 'FARMER'">Orders</el-menu-item>
           <el-menu-item index="/my-products" v-if="userRole === 'FARMER'">My Products</el-menu-item>
