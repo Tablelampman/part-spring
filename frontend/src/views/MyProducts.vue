@@ -5,6 +5,25 @@
       <el-button type="primary" @click="dialogVisible = true">Add New Product</el-button>
     </div>
 
+    <div class="filter-section">
+      <el-form :inline="true" class="search-form">
+        <el-form-item label="Product Name">
+          <el-input v-model="searchParams.name" placeholder="Search product name" clearable @keyup.enter="fetchProducts" />
+        </el-form-item>
+        <el-form-item label="Status">
+          <el-select v-model="searchParams.status" placeholder="All Status" clearable style="width: 150px">
+            <el-option label="PENDING" value="PENDING" />
+            <el-option label="APPROVED" value="APPROVED" />
+            <el-option label="REJECTED" value="REJECTED" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="fetchProducts">Search</el-button>
+          <el-button @click="resetSearch">Reset</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
     <el-table :data="products" style="width: 100%" v-loading="loading">
       <el-table-column prop="id" label="ID" width="80" />
       <el-table-column label="Image" width="100">
@@ -82,6 +101,11 @@ const products = ref([])
 const loading = ref(false)
 const dialogVisible = ref(false)
 
+const searchParams = reactive({
+  name: '',
+  status: ''
+})
+
 const uploadHeaders = computed(() => {
   return { Authorization: 'Bearer ' + userStore.token }
 })
@@ -97,8 +121,21 @@ const form = reactive({
 
 const fetchProducts = async () => {
   loading.value = true
-  products.value = await request.get('/api/products/my')
-  loading.value = false
+  try {
+    const params = {}
+    if (searchParams.name) params.name = searchParams.name
+    if (searchParams.status) params.status = searchParams.status
+
+    products.value = await request.get('/api/products/my', { params })
+  } finally {
+    loading.value = false
+  }
+}
+
+const resetSearch = () => {
+  searchParams.name = ''
+  searchParams.status = ''
+  fetchProducts()
 }
 
 const getStatusType = (status) => {
@@ -141,6 +178,13 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+.filter-section {
+  background: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.05);
 }
 .avatar-uploader .avatar {
   width: 178px;
