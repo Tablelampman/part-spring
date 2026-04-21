@@ -1,47 +1,46 @@
 <template>
   <div class="home">
-    <h2>Marketplace</h2>
+    <h2>{{ $t('product.marketplace') }}</h2>
 
     <div class="filter-section">
       <el-form :inline="true" class="search-form">
-        <el-form-item label="Search">
-          <el-input v-model="searchParams.name" placeholder="Product name" clearable @keyup.enter="fetchProducts" />
+        <el-form-item :label="$t('common.search')">
+          <el-input v-model="searchParams.name" :placeholder="$t('product.productName')" clearable @keyup.enter="fetchProducts" />
         </el-form-item>
-        <el-form-item label="Price">
-          <el-input-number v-model="searchParams.minPrice" :min="0" placeholder="Min" style="width: 100px" />
+        <el-form-item :label="$t('product.price')">
+          <el-input-number v-model="searchParams.minPrice" :min="0" :placeholder="$t('product.minPrice')" style="width: 100px" />
           <span style="margin: 0 10px;">-</span>
-          <el-input-number v-model="searchParams.maxPrice" :min="0" placeholder="Max" style="width: 100px" />
+          <el-input-number v-model="searchParams.maxPrice" :min="0" :placeholder="$t('product.maxPrice')" style="width: 100px" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="fetchProducts">Search</el-button>
-          <el-button @click="resetSearch">Reset</el-button>
+          <el-button type="primary" @click="fetchProducts">{{ $t('common.search') }}</el-button>
+          <el-button @click="resetSearch">{{ $t('common.reset') }}</el-button>
         </el-form-item>
       </el-form>
     </div>
 
     <el-tabs v-model="activeCategory" class="category-tabs" @tab-change="handleTabChange">
-      <el-tab-pane label="All" name="All"></el-tab-pane>
-      <el-tab-pane label="Fruits" name="Fruits"></el-tab-pane>
-      <el-tab-pane label="Vegetables" name="Vegetables"></el-tab-pane>
-      <el-tab-pane label="Meat & Poultry" name="Meat"></el-tab-pane>
-      <el-tab-pane label="Dairy & Eggs" name="Dairy"></el-tab-pane>
-      <el-tab-pane label="Grains" name="Grains"></el-tab-pane>
-      <el-tab-pane label="Others" name="Others"></el-tab-pane>
+      <el-tab-pane :label="$t('common.all')" name="All"></el-tab-pane>
+      <el-tab-pane :label="$t('categories.fruits')" name="Fruits"></el-tab-pane>
+      <el-tab-pane :label="$t('categories.vegetables')" name="Vegetables"></el-tab-pane>
+      <el-tab-pane :label="$t('categories.meat')" name="Meat"></el-tab-pane>
+      <el-tab-pane :label="$t('categories.dairy')" name="Dairy"></el-tab-pane>
+      <el-tab-pane :label="$t('categories.grains')" name="Grains"></el-tab-pane>
+      <el-tab-pane :label="$t('categories.others')" name="Others"></el-tab-pane>
     </el-tabs>
 
     <div class="product-grid" v-if="products.length > 0" v-loading="loading">
       <el-card v-for="product in products" :key="product.id" class="product-card" :body-style="{ padding: '0px' }" @click="goToProduct(product.id)" style="cursor: pointer;">
         <img :src="product.imageUrl" class="product-image" v-if="product.imageUrl"/>
-        <div v-else class="image-placeholder">No Image</div>
+        <div v-else class="image-placeholder">{{ $t('product.noImage') }}</div>
         <div class="product-info">
           <h3>{{ product.name }}</h3>
-          <el-tag size="small" type="info" class="cat-tag">{{ product.category || 'Others' }}</el-tag>
+          <el-tag size="small" type="info" class="cat-tag">{{ getCategoryLabel(product.category) }}</el-tag>
           <p class="desc">{{ product.description }}</p>
           <div class="bottom">
             <span class="price">￥{{ product.price }}</span>
-            <span class="stock">Stock: {{ product.stock }}</span>
+            <span class="stock">{{ $t('product.stock') }}: {{ product.stock }}</span>
           </div>
-          <!-- Show Add to Cart for consumers AND unauthenticated users (to prompt login) -->
           <el-button
             v-if="!userStore.token || userStore.userInfo.role === 'CONSUMER'"
             type="primary"
@@ -49,22 +48,24 @@
             @click.stop="addToCart(product.id)"
             :disabled="product.stock <= 0"
           >
-            Add to Cart
+            {{ $t('product.addToCart') }}
           </el-button>
         </div>
       </el-card>
     </div>
-    <el-empty description="No products found" v-else></el-empty>
+    <el-empty :description="$t('product.noProducts')" v-else></el-empty>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import request from '@/api/axios'
 import { useUserStore } from '@/store/user'
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const userStore = useUserStore()
 const products = ref([])
@@ -76,6 +77,16 @@ const searchParams = reactive({
   minPrice: null,
   maxPrice: null
 })
+
+const getCategoryLabel = (category) => {
+  if (!category || category === 'Others') return t('categories.others')
+  if (category === 'Fruits') return t('categories.fruits')
+  if (category === 'Vegetables') return t('categories.vegetables')
+  if (category === 'Meat') return t('categories.meat')
+  if (category === 'Dairy') return t('categories.dairy')
+  if (category === 'Grains') return t('categories.grains')
+  return category
+}
 
 const goToProduct = (id) => {
   router.push('/product/' + id)
@@ -117,7 +128,7 @@ const addToCart = async (productId) => {
 
   try {
     await request.post('/api/cart', { productId, quantity: 1 })
-    ElMessage.success('Added to cart')
+    ElMessage.success(t('common.success'))
   } catch(e){}
 }
 
