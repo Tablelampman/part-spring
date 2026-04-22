@@ -140,3 +140,26 @@ JDBC Connection [HikariProxyConnection@961005914 wrapping org.postgresql.jdbc.Pg
 <==        Row: 11, 5, some, hot, 3.00, 16, /uploads/74cfa374-1f51-4aa3-8d01-f59af46d7916.png, Meat, APPROVED, 2026-04-10 02:36:34.015589+00, 2026-04-10 02:36:34.015589+00
 <==      Total: 5
 Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@378021da]
+2026-04-22T06:16:42.322Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@72cd7b88 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:16:46.383Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1c8007f2 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:16:51.319Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@28fdc974 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:17:10.094Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3175f6d8 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:17:26.883Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4533f208 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:17:28.588Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1d9ed025 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:17:58.711Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@42db6060 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:18:05.904Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@256399b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:18:20.163Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3d784aaa (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-22T06:18:36.919Z  WARN 338251 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7b06ead4 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7f83ef32] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1178722797 wrapping org.postgresql.jdbc.PgConnection@faf4407] will not be managed by Spring
+==>  Preparing: SELECT id,farmer_id,name,description,price,stock,image_url,category,status,created_at,updated_at FROM products WHERE (status = ?)
+==> Parameters: APPROVED(String)
+<==    Columns: id, farmer_id, name, description, price, stock, image_url, category, status, created_at, updated_at
+<==        Row: 9, 5, tim, sometimes, 1.20, 1, /uploads/11204494-9773-4198-a04c-527cf34e1309.png, Others, APPROVED, 2026-04-09 15:53:49.253783+00, 2026-04-09 15:53:49.253783+00
+<==        Row: 7, 5, coco, good, 0.30, 3, /uploads/dbf44a0c-f55f-4a42-94bf-571185b00d56.jpg, Fruits, APPROVED, 2026-04-09 15:52:34.827931+00, 2026-04-09 15:52:34.827931+00
+<==        Row: 8, 5, dog, mie~, 0.60, 6, /uploads/ef226e3f-91e0-45a8-aa85-8c55101b8113.jpg, Vegetables, APPROVED, 2026-04-09 15:53:11.662551+00, 2026-04-09 15:53:11.662551+00
+<==        Row: 10, 5, peter, not bad, 2.00, 10, /uploads/f81ac3d0-1fad-4dc8-b737-60f88dcccb65.jpg, Others, APPROVED, 2026-04-10 02:34:16.442229+00, 2026-04-10 02:34:16.442229+00
+<==        Row: 11, 5, some, hot, 3.00, 16, /uploads/74cfa374-1f51-4aa3-8d01-f59af46d7916.png, Meat, APPROVED, 2026-04-10 02:36:34.015589+00, 2026-04-10 02:36:34.015589+00
+<==      Total: 5
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7f83ef32]

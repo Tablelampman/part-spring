@@ -1,5 +1,6 @@
 export default {
   common: {
+    logo: '助农销售平台',
     login: '登录',
     register: '注册',
     logout: '退出登录',
@@ -15,7 +16,8 @@ export default {
     createdAt: '创建时间',
     all: '全部',
     success: '成功',
-    error: '错误'
+    error: '错误',
+    id: '编号'
   },
   nav: {
     home: '首页商城',
@@ -35,7 +37,12 @@ export default {
     password: '密码',
     role: '选择角色',
     noAccount: '没有账号？去注册',
-    hasAccount: '已有账号？去登录'
+    hasAccount: '已有账号？去登录',
+    usernameReq: '请输入用户名',
+    passwordReq: '请输入密码',
+    roleReq: '请选择角色',
+    loginSuccess: '登录成功',
+    registerSuccess: '注册成功，请登录'
   },
   roles: {
     consumer: '消费者',
@@ -50,6 +57,7 @@ export default {
     addToCart: '加入购物车',
     noProducts: '未找到商品',
     productName: '商品名称',
+    farmerId: '农户ID',
     farmerName: '农户名称',
     category: '分类',
     description: '商品描述',
@@ -58,7 +66,10 @@ export default {
     minPrice: '最低价',
     maxPrice: '最高价',
     details: '商品详情',
-    back: '返回'
+    back: '返回',
+    submitReview: '商品已提交审核',
+    uploadSuccess: '上传成功',
+    deleted: '商品已删除'
   },
   categories: {
     fruits: '水果',
@@ -70,21 +81,33 @@ export default {
   },
   cart: {
     title: '我的购物车',
+    product: '商品',
     quantity: '数量',
     subtotal: '小计',
     remove: '移除',
     total: '总计',
     checkout: '去结算 ({count} 件)',
-    shippingAddress: '收货地址'
+    shippingAddress: '收货地址',
+    emptyWarning: '请输入收货地址',
+    orderSuccess: '订单创建成功',
+    removed: '已从购物车移除'
   },
   order: {
     myOrders: '我的订单',
     farmerOrders: '我的商品销售订单',
-    orderId: '订单 #{id}',
+    orderId: '订单号',
     total: '总计',
     qty: '数量',
     simulatePayment: '模拟支付',
-    deleteOrder: '删除订单'
+    deleteOrder: '删除订单',
+    paymentSuccess: '支付成功！',
+    deleted: '订单已删除'
+  },
+  users: {
+    title: '用户管理',
+    searchUsername: '搜索用户名',
+    allRoles: '所有角色',
+    deleted: '用户已删除'
   },
   dashboard: {
     title: '数据看板',
@@ -103,6 +126,9 @@ export default {
     placeholder: '有什么想问的？例如“包邮吗？新鲜吗？”',
     loginToComment: '登录后留言',
     postComment: '发表留言',
-    noComments: '暂无留言，快来提问吧！'
+    noComments: '暂无留言，快来提问吧！',
+    posted: '留言已发布',
+    deleted: '留言已删除',
+    confirmDelete: '确定要删除这条留言吗？'
   }
 }

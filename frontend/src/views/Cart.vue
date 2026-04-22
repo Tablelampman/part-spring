@@ -1,9 +1,9 @@
 <template>
   <div class="cart">
-    <h2>My Shopping Cart</h2>
+    <h2>{{ $t('cart.title') }}</h2>
     <el-table :data="cartItems" style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
-      <el-table-column label="Product">
+      <el-table-column :label="$t('cart.product')">
         <template #default="scope">
           <div style="display: flex; align-items: center;">
             <img :src="scope.row.product.imageUrl" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;"/>
@@ -11,43 +11,43 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Price" width="120">
+      <el-table-column :label="$t('product.price')" width="120">
         <template #default="scope">
           ￥{{ scope.row.product.price }}
         </template>
       </el-table-column>
-      <el-table-column prop="quantity" label="Quantity" width="150" />
-      <el-table-column label="Subtotal" width="120">
+      <el-table-column prop="quantity" :label="$t('cart.quantity')" width="150" />
+      <el-table-column :label="$t('cart.subtotal')" width="120">
         <template #default="scope">
           ￥{{ (scope.row.product.price * scope.row.quantity).toFixed(2) }}
         </template>
       </el-table-column>
-      <el-table-column label="Action" width="100">
+      <el-table-column :label="$t('common.actions')" width="100">
         <template #default="scope">
-          <el-button size="small" type="danger" @click="removeItem(scope.row.id)">Remove</el-button>
+          <el-button size="small" type="danger" @click="removeItem(scope.row.id)">{{ $t('cart.remove') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <div class="checkout-bar" v-if="cartItems.length > 0">
       <div class="total">
-        Total: <span class="price">￥{{ totalAmount.toFixed(2) }}</span>
+        {{ $t('cart.total') }}: <span class="price">￥{{ totalAmount.toFixed(2) }}</span>
       </div>
       <el-button type="primary" size="large" @click="dialogVisible = true" :disabled="selectedItems.length === 0">
-        Checkout ({{ selectedItems.length }} items)
+        {{ $t('cart.checkout', { count: selectedItems.length }) }}
       </el-button>
     </div>
 
-    <el-dialog v-model="dialogVisible" title="Checkout" width="30%">
+    <el-dialog v-model="dialogVisible" :title="$t('cart.checkout', {count: selectedItems.length})" width="30%">
       <el-form>
-        <el-form-item label="Shipping Address">
+        <el-form-item :label="$t('cart.shippingAddress')">
           <el-input type="textarea" v-model="shippingAddress" rows="3" />
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="handleCheckout">Confirm Order</el-button>
+          <el-button @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
+          <el-button type="primary" @click="handleCheckout">{{ $t('common.confirm') }}</el-button>
         </span>
       </template>
     </el-dialog>
@@ -59,7 +59,9 @@ import { ref, onMounted, computed } from 'vue'
 import request from '@/api/axios'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const cartItems = ref([])
 const selectedItems = ref([])
@@ -82,13 +84,13 @@ const totalAmount = computed(() => {
 
 const removeItem = async (id) => {
   await request.delete(`/api/cart/${id}`)
-  ElMessage.success('Removed from cart')
+  ElMessage.success(t('cart.removed'))
   fetchCart()
 }
 
 const handleCheckout = async () => {
   if (!shippingAddress.value) {
-    ElMessage.warning('Please enter a shipping address')
+    ElMessage.warning(t('cart.emptyWarning'))
     return
   }
   const itemIds = selectedItems.value.map(i => i.id)
@@ -96,7 +98,7 @@ const handleCheckout = async () => {
     cartItemIds: itemIds,
     shippingAddress: shippingAddress.value
   })
-  ElMessage.success('Order created successfully')
+  ElMessage.success(t('cart.orderSuccess'))
   dialogVisible.value = false
   router.push('/orders')
 }
