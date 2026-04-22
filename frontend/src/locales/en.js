@@ -1,5 +1,6 @@
 export default {
   common: {
+    logo: 'AgriSales Platform',
     login: 'Login',
     register: 'Register',
     logout: 'Logout',
@@ -15,7 +16,8 @@ export default {
     createdAt: 'Created At',
     all: 'All',
     success: 'Success',
-    error: 'Error'
+    error: 'Error',
+    id: 'ID'
   },
   nav: {
     home: 'Home (Shop)',
@@ -35,7 +37,12 @@ export default {
     password: 'Password',
     role: 'Select Role',
     noAccount: 'Don\'t have an account? Register',
-    hasAccount: 'Already have an account? Login'
+    hasAccount: 'Already have an account? Login',
+    usernameReq: 'Please input username',
+    passwordReq: 'Please input password',
+    roleReq: 'Please select a role',
+    loginSuccess: 'Login success',
+    registerSuccess: 'Register success, please login'
   },
   roles: {
     consumer: 'Consumer',
@@ -50,6 +57,7 @@ export default {
     addToCart: 'Add to Cart',
     noProducts: 'No products found',
     productName: 'Product Name',
+    farmerId: 'Farmer ID',
     farmerName: 'Farmer Name',
     category: 'Category',
     description: 'Description',
@@ -58,7 +66,10 @@ export default {
     minPrice: 'Min',
     maxPrice: 'Max',
     details: 'Product Details',
-    back: 'Back'
+    back: 'Back',
+    submitReview: 'Product submitted for review',
+    uploadSuccess: 'Upload success',
+    deleted: 'Product deleted'
   },
   categories: {
     fruits: 'Fruits',
@@ -70,21 +81,33 @@ export default {
   },
   cart: {
     title: 'My Shopping Cart',
+    product: 'Product',
     quantity: 'Quantity',
     subtotal: 'Subtotal',
     remove: 'Remove',
     total: 'Total',
     checkout: 'Checkout ({count} items)',
-    shippingAddress: 'Shipping Address'
+    shippingAddress: 'Shipping Address',
+    emptyWarning: 'Please enter a shipping address',
+    orderSuccess: 'Order created successfully',
+    removed: 'Removed from cart'
   },
   order: {
     myOrders: 'My Orders',
     farmerOrders: 'Orders for My Products',
-    orderId: 'Order #{id}',
+    orderId: 'Order ID',
     total: 'Total',
     qty: 'Qty',
     simulatePayment: 'Simulate Payment',
-    deleteOrder: 'Delete Order'
+    deleteOrder: 'Delete Order',
+    paymentSuccess: 'Payment successful!',
+    deleted: 'Order deleted'
+  },
+  users: {
+    title: 'User Management',
+    searchUsername: 'Search username',
+    allRoles: 'All Roles',
+    deleted: 'User deleted'
   },
   dashboard: {
     title: 'Dashboard',
@@ -103,6 +126,9 @@ export default {
     placeholder: 'Ask a question or leave a comment...',
     loginToComment: 'Login to Comment',
     postComment: 'Post Comment',
-    noComments: 'No comments yet. Be the first to ask!'
+    noComments: 'No comments yet. Be the first to ask!',
+    posted: 'Comment posted',
+    deleted: 'Comment deleted',
+    confirmDelete: 'Are you sure you want to delete this comment?'
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <el-container class="layout-container">
     <el-header class="header">
-      <div class="logo">AgriSales Platform</div>
+      <div class="logo">{{ ('common.logo') }}</div>
       <div class="nav-menu">
         <el-menu mode="horizontal" :router="true" :default-active="$route.path">
           <el-menu-item index="/">{{ $t('nav.home') }}</el-menu-item>

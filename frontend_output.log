@@ -24,3 +24,8 @@
 2:29:22 PM [vite] (client) [optimizer] bundling dependencies...
 2:29:23 PM [vite] (client) ✨ new dependencies optimized: vue-i18n
 2:29:23 PM [vite] (client) ✨ optimized dependencies changed. reloading
+6:21:07 AM [vite] (client) page reload src/locales/en.js
+6:21:07 AM [vite] (client) page reload src/locales/zh.js
+6:21:58 AM [vite] (client) hmr update /src/layout/index.vue
+6:21:58 AM [vite] (client) hmr update /src/views/Login.vue
+6:21:58 AM [vite] (client) hmr update /src/views/Register.vue
