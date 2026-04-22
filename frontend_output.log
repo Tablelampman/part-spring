@@ -18,3 +18,9 @@
 8:09:33 AM [vite] (client) hmr update /src/layout/index.vue
 2:45:01 PM [vite] (client) page reload src/router/index.js
 2:45:01 PM [vite] (client) hmr update /src/views/Home.vue
+2:19:36 PM [vite] (client) page reload src/main.js
+2:21:01 PM [vite] (client) hmr update /src/layout/index.vue, /src/layout/index.vue?vue&type=style&index=0&scoped=051739fd&lang.css
+2:23:20 PM [vite] (client) hmr update /src/views/Home.vue
+2:29:22 PM [vite] (client) [optimizer] bundling dependencies...
+2:29:23 PM [vite] (client) ✨ new dependencies optimized: vue-i18n
+2:29:23 PM [vite] (client) ✨ optimized dependencies changed. reloading
